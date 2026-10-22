@@ -1,0 +1,9 @@
+[package]
+name = "state-store-api"
+version = "0.1.0"
+edition = "2021"
+description = "Typed API of the state.store cell: versioned JSON docs per (app, collection, key), compare-and-set, live Watch (types only)"
+
+[dependencies]
+ce-wire = { git = "https://github.com/ce-net/ce-door", rev = "b1da138ac2edf0e3d32c01d481b4b5812acf429d", default-features = false, features = ["blocking"] }
+ce-gate = { git = "https://github.com/ce-net/ce-door", rev = "b1da138ac2edf0e3d32c01d481b4b5812acf429d" }

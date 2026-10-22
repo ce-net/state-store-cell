@@ -1,0 +1,11 @@
+# state.store: the per-op hashes callers of this version rely on. Kept by ce_wire::check_lock in cargo test; commit it.
+version 2
+1 Get 2e9f35ac4e9be9a2
+2 Put c18397fb45d4782f
+3 Delete 013f40feb0c61989
+4 List 1a39451ecb211425
+5 Health ae6405f242a4cbd4
+7 Patch 3163ace489ddf106
+8 Schema e196eefe32943b0f
+9 SchemaPut ef98de2a38b0da12
+6 Watch 2b42c8aeafc3212e
