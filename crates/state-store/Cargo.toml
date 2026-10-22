@@ -6,8 +6,8 @@ description = "state.store cell: typed ce-wire front door of the shared state st
 
 [dependencies]
 state-store-api = { path = "../state-store-api" }
-ce-wire = { git = "https://github.com/ce-net/ce-door", rev = "b1da138ac2edf0e3d32c01d481b4b5812acf429d" }
-ce-gate = { git = "https://github.com/ce-net/ce-door", rev = "b1da138ac2edf0e3d32c01d481b4b5812acf429d" }
+ce-wire = { git = "https://github.com/ce-net/ce-door", rev = "bcbbbb583df3f68d5e379b1469887033fcd8b9ce" }
+ce-gate = { git = "https://github.com/ce-net/ce-door", rev = "bcbbbb583df3f68d5e379b1469887033fcd8b9ce" }
 libc = "0.2.190"
 tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros", "net", "time", "sync"] }
 ureq = { version = "2", default-features = false, features = ["json"] }
