@@ -35,7 +35,7 @@ pub fn check_value(s: &str) -> Result<(), String> {
 }
 
 ce_wire::api! {
-    api StateStore = "state.store", version 2;
+    api StateStore = "state.store", version 2, accepts [0x17de2d4fee4776ea];
     types {
         // Coll: one collection of one app. Every request also carries `cap`: the hex ce-cap chain that grants
         // `state.<app>.<coll>.read|write|own` (what `ce-iam wallet show state.store:<app>` prints). The Hello proves
@@ -60,6 +60,11 @@ ce_wire::api! {
         pub struct SchemaReq { pub app: String, pub cap: String }
         // SchemaPutReq: schema is the JSON of {app, collections:{...}}; needs `state.<app>.admin`.
         pub struct SchemaPutReq { pub app: String, pub schema: String, pub cap: String }
+        // PeerPull: one replication peer. last_ok_pull_at = unix ms of the last pull that applied cleanly, 0 = none
+        // since this server started (held in memory); age_ms = now - last_ok_pull_at on this server's clock, u64::MAX
+        // when none. A reader that needs a fresh replica (cap.admit: under 10 s) checks age_ms.
+        pub struct PeerPull { pub peer: String, pub seq: u64, pub last_ok_pull_at: u64, pub age_ms: u64 }
+        pub struct ReplStatus { pub node: String, pub peers: Vec<PeerPull> }
         pub struct StoreHealth { pub backend: String, pub records: u64, pub head_seq: u64, pub audit_rows: u64, pub schema_hash: u64 }
     }
     ops {
@@ -71,6 +76,7 @@ ce_wire::api! {
         7 => Patch(PatchReq) -> Doc, needs "state.store:write";
         8 => Schema(SchemaReq) -> Option<String>, needs "state.store:read";
         9 => SchemaPut(SchemaPutReq) -> (), needs "state.store:write";
+        10 => ReplHealth(()) -> ReplStatus, needs "state.store:read";
     }
     streams {
         6 => Watch(WatchReq) -> stream Doc, needs "state.store:read";
